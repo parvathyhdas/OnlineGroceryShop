@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+{% extends 'index.html'%}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div style="text-align:center;">
+    <h3>Add Product</h3>
+</div>
+<form method="post" action="{% url 'saveProduct'%}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="col-sm-12 col-xl-12">
+                        <div class="bg-secondary rounded h-100 p-4">
+                            <h6 class="mb-4">Product</h6>
+                            <form>
+                                 <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">Product Name</label>
+                                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="pname">
+
+                                </div>
+                                <select class="form-select form-select-sm mb-3" aria-label=".form-select-sm example" name="cname">
+                                <option selected="">select category</option>
+                                    {% for i in data%}
+                                <option>{{i.CategoryName}}</option>
+                                    {% endfor%}
+                            </select>
+                                <div class="mb-3">
+                                <label for="formFile" class="form-label">Product Image</label>
+                                <input class="form-control bg-dark" type="file" id="formFile" name="pimage">
+                            </div>
+                                 <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">Price</label>
+                                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="price">
+
+                                </div>
+                                <div class="form-floating">
+                                <textarea class="form-control" placeholder="Description" id="floatingTextarea" style="height: 150px;" name="description"></textarea>
+                                <label for="floatingTextarea">Description</label>
+                            </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+</form>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+{% if messages %}
+    {% for i in messages %}
+        {% if i.tags == 'warning' %}
+            <script>
+                swal('{{i}}','','warning');
+            </script>
+        {% elif i.tags == 'error' %}
+            <script>
+                swal('{{i}}','','error');
+            </script>
+        {% elif i.tags == 'success' %}
+             <script>
+                swal('{{i}}','','success');
+            </script>
+        {% else %}
+             <script>
+                swal('{{i}}','','info');
+            </script>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+</body>
+</html>
+{% endblock %}

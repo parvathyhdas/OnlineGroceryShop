@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+{% extends 'index.html'%}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div style="text-align:center;">
+  <h4>Display Categories..</h4>
+</div>
+<div class="col-sm-12 col-xl-12">
+                        <div class="bg-secondary rounded h-100 p-4">
+                            <h6 class="mb-4">Categories</h6>
+                            <table class="table table-dark">
+                                <thead>
+                                    <tr>
+
+                                        <th scope="col">CategoryName</th>
+                                        <th scope="col">Image</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for i in data%}
+                                    <tr>
+                                        <td scope="row">{{i.CategoryName}}</td>
+                                        <td scope="row">
+                                            <img src=" {{i.CategoryImage.url}}" width="50px" height="50px">
+                                                   </td>
+                                        <td scope="row">{{i.Description}}</td>
+                                        <td scope="row">
+                                            <form action="{% url 'editcategory' dataid=i.id %}">
+                                                 <button type="submit" class="btn btn-primary">Edit</button>
+                                            </form>
+                                        </td>
+                                        <td scope="row">
+                                            <form action="{% url 'deleteCategory' dataid=i.id %}">
+                                                 <button type="submit" class="btn btn-primary">Delete</button>
+                                            </form>
+                                        </td>
+
+
+                                    </tr>
+
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+{% if messages %}
+    {% for i in messages %}
+        {% if i.tags == 'warning' %}
+            <script>
+                swal('{{i}}','','warning');
+            </script>
+        {% elif i.tags == 'error' %}
+            <script>
+                swal('{{i}}','','error');
+            </script>
+        {% elif i.tags == 'success' %}
+             <script>
+                swal('{{i}}','','success');
+            </script>
+        {% else %}
+             <script>
+                swal('{{i}}','','info');
+            </script>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% extends 'index.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <h3>Edit Product Here..</h3>
+</div>
+<form method="post" action="{% url 'updateProduct' dataid=data.id%}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="col-sm-12 col-xl-12">
+                        <div class="bg-secondary rounded h-100 p-4">
+                            <h6 class="mb-4">Categories</h6>
+                            <form>
+                                 <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">Product Name</label>
+                                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="pname" value="{{data.ProductName}}">
+
+                                </div>
+                                <select class="form-select form-select-sm mb-3" aria-label=".form-select-sm example" name="cname">
+
+                                    <option>{{data.CategoryName}}</option>
+                                    {% for i in pro %}
+                                    <option>{{i.CategoryName}}</option>
+                                    {% endfor%}
+                            </select>
+                                <div class="mb-3">
+                                <label for="formFile" class="form-label">Product Image</label>
+                                <input class="form-control bg-dark" type="file" id="formFile" name="pimage">
+                                    <img src="{{data.ProductImage.url}}" width="50px" height="50px">
+                            </div>
+                                <div class="form-floating">
+                                <textarea class="form-control" placeholder="Description" id="floatingTextarea" style="height: 150px;" name="description">{{data.Description}}</textarea>
+                                <label for="floatingTextarea">Description</label>
+                            </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+</form>
+</body>
+</html>
+{% endblock %}
